@@ -1,10 +1,50 @@
+Ilbot
+=====
+Introduction
+------------
 This is an IRC logging bot, and a CGI web interface for showing the logs.
 
+Documentation
+-------------
 The documentation can be found at http://moritz.faui2k3.org/en/ilbot
 
-Installation instructs are still sorely missing, sorry about that.
+Installation
+------------
+To install these scripts on your system you need to
 
-Note that in production mode, pages are cached for performance reason.
+Create a database, you can use ilbot.sql for that if you use MySQL
+Install all dependencies, among them are
+        Bot::BasicBot
+        Calendar::Simple
+        Config::File
+        CGI
+        Date::Simple
+        DBI
+        CGI::Carp
+        Encode::Guess
+        HTML::Entities
+        HTML::Template
+        HTTP::Headers
+        File::Slurp
+        Regexp::Common
+        Text::Table
+        Cache::Cache
+Modify all config files, hopefully they are self-explanatory. Be sure to leave the NO_CACHE = 1 directrive in cgi.conf for now.
+
+Copy (or link) the files of the cgi/ directory to where your webserver can find them, and edit the colors hash to fit your needs.
+
+Please be sure to to include the .htacess file, which is hidden in default UNIX directory listings.
+
+Here is an example virtual host configuration file: http://moritz.faui2k3.org/tmp/irclog.perlgeek.de.conf
+
+Be sure to password-protect the file spam.pl with a .htaccess file.
+
+Edit cgi/footer.tmpl and insert your name and Homepage in the "Provided by..." sentence, and add your contact details (and delete mine, please).
+
+Once you're happy with your setup, enable caching by deleting the NO_CACHE = 1 line from cgi.conf
+
+Note that in production mode, pages are cached for performance reasons.
+
 During the installation, you should have caching disabled (by
 setting NO_CACHE = 1 in cgi.conf). Once you're confident with your setup,
 remove that setting again.
@@ -13,7 +53,7 @@ WARNING: When upgrading from previous versions of ilbot, and if you haven't
 done it yet, you might need to change the SQL schema by running the
 update-sql-add-summary.sql SQL file against your database, like
 
-    mysql yourdatabse < update-sql-add-summary.sql
+  mysql yourdatabse < update-sql-add-summary.sql
 
 This might take a while, depending on the size of your database. During that
 time, the IRC logs won't work properly.
